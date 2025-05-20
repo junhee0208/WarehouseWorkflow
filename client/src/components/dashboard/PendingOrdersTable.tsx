@@ -11,18 +11,18 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 
 const PendingOrdersTable: React.FC = () => {
   const [, setLocation] = useLocation();
-  const { startPickingProcess } = useGlobal();
   const { getPendingOrders } = useOrderService();
   
   const pendingOrders = getPendingOrders();
 
   const handleStartPicking = (orderId: string) => {
-    startPickingProcess(orderId);
+    // For demo purposes, we'll just navigate to the picking page
+    // In a real app, we would use context or state management to track the active order
+    localStorage.setItem('activeOrderId', orderId);
     setLocation("/picking");
   };
 
