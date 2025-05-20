@@ -13,7 +13,7 @@ import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 import { FilterIcon, Download, RefreshCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { 
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 
 const OrdersTable: React.FC = () => {
-  const [, navigate] = useNavigate();
+  const [, setLocation] = useLocation();
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const { startPickingProcess } = useGlobal();
   const { getAllOrders } = useOrderService();
@@ -38,12 +38,12 @@ const OrdersTable: React.FC = () => {
 
   const handleStartPicking = (orderId: string) => {
     startPickingProcess(orderId);
-    navigate("/picking");
+    setLocation("/picking");
   };
 
   const handleStartPacking = (orderId: string) => {
     // In a real app, we would start a packing process
-    navigate("/packing");
+    setLocation("/packing");
   };
 
   return (

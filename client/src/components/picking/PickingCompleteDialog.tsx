@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 import { useOrderService } from "@/services/orderService";
 
 interface PickingCompleteDialogProps {
@@ -16,7 +16,7 @@ const PickingCompleteDialog: React.FC<PickingCompleteDialogProps> = ({
   open,
   onClose
 }) => {
-  const [, navigate] = useNavigate();
+  const [, setLocation] = useLocation();
   const { getOrderById } = useOrderService();
   const order = orderId ? getOrderById(orderId) : null;
   
@@ -28,7 +28,7 @@ const PickingCompleteDialog: React.FC<PickingCompleteDialogProps> = ({
   
   const handleGoToPacking = () => {
     onClose();
-    navigate("/packing");
+    setLocation("/packing");
   };
 
   return (
