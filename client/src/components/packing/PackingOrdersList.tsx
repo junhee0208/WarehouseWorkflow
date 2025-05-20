@@ -3,17 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
+import { useLocation } from "wouter";
 
 const PackingOrdersList: React.FC = () => {
-  const { startPackingProcess } = useGlobal();
+  const [, setLocation] = useLocation();
   const { getPickedOrders } = useOrderService();
   
   const pickedOrders = getPickedOrders();
   
   const handleStartPacking = (orderId: string) => {
-    startPackingProcess(orderId);
+    // Store the order ID in localStorage for the packing page to use
+    localStorage.setItem('activePackingOrderId', orderId);
+    setLocation("/packing");
   };
 
   return (
