@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useOrderService } from "@/services/orderService";
-import { useGlobal } from "@/contexts/GlobalContext";
+// Removed GlobalContext dependency
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 interface PickingProcessProps {
@@ -30,7 +30,6 @@ const PickingProcess: React.FC<PickingProcessProps> = ({
 }) => {
   const { toast } = useToast();
   const { getOrderById, getProductById, markItemAsPicked } = useOrderService();
-  const { activePickingOrder, setActivePickingOrder } = useGlobal();
   
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [pickedQuantity, setPickedQuantity] = useState(0);
@@ -98,7 +97,7 @@ const PickingProcess: React.FC<PickingProcessProps> = ({
       toast({
         title: "Scan successful",
         description: `Verified: ${product.name}`,
-        variant: "success",
+        variant: "default",
       });
       
       // Set quantity to the required amount by default
@@ -131,7 +130,7 @@ const PickingProcess: React.FC<PickingProcessProps> = ({
     toast({
       title: "Item picked",
       description: `${pickedQuantity} x ${product.name}`,
-      variant: "success",
+      variant: "default",
     });
     
     // Update progress
@@ -161,7 +160,7 @@ const PickingProcess: React.FC<PickingProcessProps> = ({
     toast({
       title: "Item not found",
       description: "This issue has been reported to the warehouse manager",
-      variant: "warning",
+      variant: "destructive",
     });
   };
   
