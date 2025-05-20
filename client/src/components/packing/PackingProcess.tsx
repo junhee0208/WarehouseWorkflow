@@ -169,7 +169,7 @@ const PackingProcess: React.FC<PackingProcessProps> = ({
     toast({
       title: "Item verified",
       description: `${item.quantity} x ${product?.name}`,
-      variant: "success",
+      variant: "default",
     });
     
     // Update progress
@@ -443,7 +443,7 @@ const PackingProcess: React.FC<PackingProcessProps> = ({
           
           <div className="ml-auto">
             <Button 
-              variant="success"
+              variant="default"
               className="bg-success text-white hover:bg-success/90"
               disabled={!canComplete}
               onClick={handleCompletePackingOrder}
