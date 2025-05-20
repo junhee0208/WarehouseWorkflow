@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { User } from '@shared/schema';
 import { useAuthService } from '@/services/authService';
 import { useToast } from '@/hooks/use-toast';
