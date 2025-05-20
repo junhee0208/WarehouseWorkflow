@@ -17,6 +17,7 @@ function App() {
 
   // If user is not authenticated and not on login page, redirect to login
   if (!isAuthenticated && location !== "/") {
+    // Use setLocation instead of manipulating window.location directly
     window.location.href = "/";
     return null;
   }
