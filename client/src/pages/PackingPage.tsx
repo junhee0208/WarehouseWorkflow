@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PackingOrdersList from "@/components/packing/PackingOrdersList";
 import PackingStats from "@/components/packing/PackingStats";
 import PackingProcess from "@/components/packing/PackingProcess";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -10,34 +9,44 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 
 const PackingPage: React.FC = () => {
-  const { activePackingOrder, setActivePackingOrder } = useGlobal();
+  const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
   const { completeOrderPacking } = useOrderService();
   const { toast } = useToast();
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null);
   
+  // Check localStorage for any active packing orders
+  useEffect(() => {
+    const storedOrderId = localStorage.getItem('activePackingOrderId');
+    if (storedOrderId) {
+      setActiveOrderId(storedOrderId);
+    }
+  }, []);
+  
   const handlePackingComplete = () => {
-    if (activePackingOrder) {
-      completeOrderPacking(activePackingOrder.orderId);
-      setCompletedOrderId(activePackingOrder.orderId);
-      setActivePackingOrder(null);
+    if (activeOrderId) {
+      completeOrderPacking(activeOrderId);
+      setCompletedOrderId(activeOrderId);
+      setActiveOrderId(null);
+      localStorage.removeItem('activePackingOrderId');
       setShowCompleteDialog(true);
       
       toast({
         title: "Packing completed",
-        description: `Order ${activePackingOrder.orderId} has been successfully packed`,
-        variant: "success",
+        description: `Order ${activeOrderId} has been successfully packed`,
+        variant: "default",
       });
     }
   };
   
   const handlePackingCancel = () => {
-    if (activePackingOrder) {
-      setActivePackingOrder(null);
+    if (activeOrderId) {
+      setActiveOrderId(null);
+      localStorage.removeItem('activePackingOrderId');
       
       toast({
         title: "Packing cancelled",
-        description: `Packing for order ${activePackingOrder.orderId} has been cancelled`,
+        description: `Packing for order ${activeOrderId} has been cancelled`,
       });
     }
   };
@@ -53,14 +62,14 @@ const PackingPage: React.FC = () => {
         <p className="text-muted-foreground">Pack and prepare orders for shipping</p>
       </div>
       
-      {!activePackingOrder ? (
+      {!activeOrderId ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <PackingOrdersList />
           <PackingStats />
         </div>
       ) : (
         <PackingProcess
-          orderId={activePackingOrder.orderId}
+          orderId={activeOrderId}
           onComplete={handlePackingComplete}
           onCancel={handlePackingCancel}
         />

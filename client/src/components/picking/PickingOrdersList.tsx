@@ -4,18 +4,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 
 const PickingOrdersList: React.FC = () => {
   const [, setLocation] = useLocation();
-  const { startPickingProcess } = useGlobal();
   const { getPendingOrders } = useOrderService();
   
   const pendingOrders = getPendingOrders();
   
   const handleStartPicking = (orderId: string) => {
-    startPickingProcess(orderId);
+    // Store the order ID in localStorage for the picking page to use
+    localStorage.setItem('activeOrderId', orderId);
+    setLocation("/picking");
   };
 
   return (
