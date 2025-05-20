@@ -78,14 +78,14 @@ const PackingOrdersList: React.FC = () => {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="picked">
+                    <Badge className="bg-blue-500 text-white hover:bg-blue-600">
                       Picked
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <Button 
-                      variant="link" 
-                      className="text-secondary hover:text-secondary-dark"
+                      variant="default" 
+                      className="bg-primary text-white hover:bg-primary/90"
                       onClick={() => handleStartPacking(order.orderId)}
                     >
                       Start Packing
