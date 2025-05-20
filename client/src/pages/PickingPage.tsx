@@ -1,41 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PickingOrdersList from "@/components/picking/PickingOrdersList";
 import PickingStats from "@/components/picking/PickingStats";
 import PickingProcess from "@/components/picking/PickingProcess";
 import PickingCompleteDialog from "@/components/picking/PickingCompleteDialog";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 import { useToast } from "@/hooks/use-toast";
 
 const PickingPage: React.FC = () => {
-  const { activePickingOrder, setActivePickingOrder } = useGlobal();
-  const { completeOrderPicking } = useOrderService();
+  const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
+  const { completeOrderPicking, getOrderById } = useOrderService();
   const { toast } = useToast();
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null);
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
   
+  // Check if there's an active order ID in localStorage (set by OrdersTable)
+  useEffect(() => {
+    const storedOrderId = localStorage.getItem('activeOrderId');
+    if (storedOrderId) {
+      setActiveOrderId(storedOrderId);
+    }
+  }, []);
+  
   const handlePickingComplete = () => {
-    if (activePickingOrder) {
-      completeOrderPicking(activePickingOrder.orderId);
-      setCompletedOrderId(activePickingOrder.orderId);
-      setActivePickingOrder(null);
+    if (activeOrderId) {
+      completeOrderPicking(activeOrderId);
+      setCompletedOrderId(activeOrderId);
+      setActiveOrderId(null);
+      localStorage.removeItem('activeOrderId');
       setShowCompleteDialog(true);
       
       toast({
         title: "Picking completed",
-        description: `Order ${activePickingOrder.orderId} has been successfully picked`,
-        variant: "success",
+        description: `Order ${activeOrderId} has been successfully picked`,
+        variant: "default",
       });
     }
   };
   
   const handlePickingCancel = () => {
-    if (activePickingOrder) {
-      setActivePickingOrder(null);
+    if (activeOrderId) {
+      setActiveOrderId(null);
+      localStorage.removeItem('activeOrderId');
       
       toast({
         title: "Picking cancelled",
-        description: `Picking for order ${activePickingOrder.orderId} has been cancelled`,
+        description: `Picking for order ${activeOrderId} has been cancelled`,
       });
     }
   };
@@ -52,14 +61,14 @@ const PickingPage: React.FC = () => {
         <p className="text-muted-foreground">Manage your assigned pick lists and fulfill orders</p>
       </div>
       
-      {!activePickingOrder ? (
+      {!activeOrderId ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <PickingOrdersList />
           <PickingStats />
         </div>
       ) : (
         <PickingProcess
-          orderId={activePickingOrder.orderId}
+          orderId={activeOrderId}
           onComplete={handlePickingComplete}
           onCancel={handlePickingCancel}
         />
