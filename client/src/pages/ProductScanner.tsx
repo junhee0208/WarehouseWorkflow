@@ -6,15 +6,19 @@ import ScannedItemsHistory from "@/components/scan/ScannedItemsHistory";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { useScanningService } from "@/services/scanningService";
-import { useGlobal } from "@/contexts/GlobalContext";
 
 const ProductScanner: React.FC = () => {
   const [showManualEntry, setShowManualEntry] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
+  const [scannedItems, setScannedItems] = useState<{
+    time: string;
+    productId: string;
+    name: string;
+    location: string;
+  }[]>([]);
   
   const { getProductById } = useScanningService();
-  const { scannedItems, addScannedItem } = useGlobal();
   
   const handleProductLookup = (productId: string) => {
     setSelectedProductId(productId);
@@ -23,11 +27,13 @@ const ProductScanner: React.FC = () => {
     // Add to scan history
     const product = getProductById(productId);
     if (product) {
-      addScannedItem(
-        product.productId,
-        product.name,
-        product.location
-      );
+      const newScannedItem = {
+        time: new Date().toLocaleTimeString(),
+        productId: product.productId,
+        name: product.name,
+        location: product.location
+      };
+      setScannedItems(prev => [newScannedItem, ...prev]);
     }
   };
 

@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { useOrderService } from "@/services/orderService";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -27,7 +26,6 @@ import {
 const OrdersTable: React.FC = () => {
   const [, setLocation] = useLocation();
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
-  const { startPickingProcess } = useGlobal();
   const { getAllOrders } = useOrderService();
   
   const orders = getAllOrders();
@@ -37,7 +35,8 @@ const OrdersTable: React.FC = () => {
   };
 
   const handleStartPicking = (orderId: string) => {
-    startPickingProcess(orderId);
+    // Store the order ID in localStorage for the picking page to use
+    localStorage.setItem('activeOrderId', orderId);
     setLocation("/picking");
   };
 
