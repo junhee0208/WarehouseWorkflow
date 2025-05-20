@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useOrderService } from "@/services/orderService";
-import { useGlobal } from "@/contexts/GlobalContext";
+// Removed GlobalContext dependency
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Html5Qrcode } from "html5-qrcode";
 
@@ -28,7 +28,7 @@ const PackingProcess: React.FC<PackingProcessProps> = ({
 }) => {
   const { toast } = useToast();
   const { getOrderById, getProductById, markItemAsVerified } = useOrderService();
-  const { activePackingOrder, setActivePackingOrder } = useGlobal();
+  // No need for global context
   
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [progress, setProgress] = useState(0);

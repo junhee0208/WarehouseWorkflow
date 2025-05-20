@@ -481,7 +481,7 @@ const PickingProcess: React.FC<PickingProcessProps> = ({
         {/* Action Buttons */}
         <div className="flex justify-end space-x-4">
           <Button 
-            variant="success"
+            variant="default"
             className="bg-success text-white hover:bg-success/90"
             disabled={!canComplete}
             onClick={handleCompletePicking}
