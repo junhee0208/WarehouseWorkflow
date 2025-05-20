@@ -444,7 +444,7 @@ const PackingProcess: React.FC<PackingProcessProps> = ({
           <div className="ml-auto">
             <Button 
               variant="default"
-              className="bg-success text-white hover:bg-success/90"
+              className="bg-primary text-white hover:bg-primary/90"
               disabled={!canComplete}
               onClick={handleCompletePackingOrder}
             >
