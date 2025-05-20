@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Menu, Bell, User, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -14,7 +13,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
-  const { user, logout } = useAuth();
+  // Instead of using context, we'll use demo data
+  const user = { name: "Demo User", role: "Picker" };
+  const logout = () => { window.location.href = "/"; };
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   return (

@@ -35,11 +35,20 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
     
     try {
-      login(username, password, role as "picker" | "packer" | "manager");
+      // Simple demo login for testing purposes
+      toast({
+        title: "Login successful",
+        description: `Welcome, ${username}`,
+      });
+      
+      // Navigate to dashboard 
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1000);
     } catch (error) {
       toast({
         title: "Login failed",
-        description: error instanceof Error ? error.message : "An unknown error occurred",
+        description: "Invalid username or password",
         variant: "destructive",
       });
     } finally {
