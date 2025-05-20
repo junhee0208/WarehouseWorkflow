@@ -41,7 +41,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         toast({
           title: "Login successful",
           description: `Welcome, ${userData.name}`,
-          variant: "success",
         });
       } else {
         toast({
@@ -70,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Check for existing auth session on component mount
-  React.useEffect(() => {
+  useEffect(() => {
     const storedAuth = sessionStorage.getItem('wms_auth');
     if (storedAuth) {
       try {

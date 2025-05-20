@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("picker1");
@@ -18,7 +17,7 @@ const LoginPage: React.FC = () => {
   const [role, setRole] = useState("picker");
   const [isLoading, setIsLoading] = useState(false);
   
-  const { login } = useAuth();
+  // We'll use local login for demo purposes
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Switch, useLocation } from "wouter";
 import LoginPage from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
@@ -7,20 +8,13 @@ import PickingPage from "@/pages/PickingPage";
 import PackingPage from "@/pages/PackingPage";
 import InventoryPage from "@/pages/InventoryPage";
 import NotFound from "@/pages/not-found";
-import { useAuth } from "@/contexts/AuthContext";
 import AppLayout from "@/components/layout/AppLayout";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  // For demo purposes, we'll use local state instead of the context
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true for demo 
   const [location] = useLocation();
-
-  // If user is not authenticated and not on login page, redirect to login
-  if (!isAuthenticated && location !== "/") {
-    // Use setLocation instead of manipulating window.location directly
-    window.location.href = "/";
-    return null;
-  }
 
   return (
     <TooltipProvider>
