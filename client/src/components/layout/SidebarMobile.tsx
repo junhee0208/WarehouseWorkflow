@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
 import { X, User, Home, ClipboardList, QrCode, ShoppingCart, Package, Database, LogOut } from "lucide-react";
 
 interface SidebarMobileProps {
@@ -10,7 +9,9 @@ interface SidebarMobileProps {
 
 const SidebarMobile: React.FC<SidebarMobileProps> = ({ isOpen, onClose }) => {
   const [location] = useLocation();
-  const { user, logout } = useAuth();
+  // Use mock data for demo instead of context
+  const user = { name: "Demo User", role: "Picker" };
+  const logout = () => { window.location.href = "/"; };
 
   const isActive = (path: string) => {
     return location === path;

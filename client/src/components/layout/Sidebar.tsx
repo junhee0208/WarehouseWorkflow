@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
 import Logo from "@/components/icons/Logo";
-import { useAuth } from "@/contexts/AuthContext";
 import {
   Home,
   ClipboardList,
@@ -14,7 +13,8 @@ import {
 
 const Sidebar: React.FC = () => {
   const [location] = useLocation();
-  const { user } = useAuth();
+  // Use mock data instead of context for demo
+  const user = { name: "Demo User", role: "Picker" };
 
   const isActive = (path: string) => {
     return location === path;
