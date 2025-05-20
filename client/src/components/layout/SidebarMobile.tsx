@@ -40,82 +40,88 @@ const SidebarMobile: React.FC<SidebarMobileProps> = ({ isOpen, onClose }) => {
         <nav className="flex-1">
           <ul className="space-y-1">
             <li>
-              <Link href="/dashboard">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/dashboard") || isActive("/") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <Home className="mr-3" size={20} />
-                  <span>Dashboard</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/dashboard") || isActive("/") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/dashboard";
+                }}
+              >
+                <Home className="mr-3" size={20} />
+                <span>Dashboard</span>
+              </div>
             </li>
             <li>
-              <Link href="/orders">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/orders") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <ClipboardList className="mr-3" size={20} />
-                  <span>Orders</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/orders") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/orders";
+                }}
+              >
+                <ClipboardList className="mr-3" size={20} />
+                <span>Orders</span>
+              </div>
             </li>
             <li>
-              <Link href="/scan">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/scan") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <QrCode className="mr-3" size={20} />
-                  <span>Scan Products</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/scan") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/scan";
+                }}
+              >
+                <QrCode className="mr-3" size={20} />
+                <span>Scan Products</span>
+              </div>
             </li>
             <li>
-              <Link href="/picking">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/picking") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <ShoppingCart className="mr-3" size={20} />
-                  <span>Picking</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/picking") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/picking";
+                }}
+              >
+                <ShoppingCart className="mr-3" size={20} />
+                <span>Picking</span>
+              </div>
             </li>
             <li>
-              <Link href="/packing">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/packing") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <Package className="mr-3" size={20} />
-                  <span>Packing</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/packing") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/packing";
+                }}
+              >
+                <Package className="mr-3" size={20} />
+                <span>Packing</span>
+              </div>
             </li>
             <li>
-              <Link href="/inventory">
-                <a 
-                  className={`flex items-center p-3 rounded-md ${
-                    isActive("/inventory") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-                  }`}
-                  onClick={onClose}
-                >
-                  <Database className="mr-3" size={20} />
-                  <span>Inventory</span>
-                </a>
-              </Link>
+              <div 
+                className={`flex items-center p-3 rounded-md cursor-pointer ${
+                  isActive("/inventory") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  onClose();
+                  window.location.href = "/inventory";
+                }}
+              >
+                <Database className="mr-3" size={20} />
+                <span>Inventory</span>
+              </div>
             </li>
           </ul>
         </nav>

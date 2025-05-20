@@ -90,14 +90,15 @@ const Sidebar: React.FC = () => {
             </div>
           </li>
           <li>
-            <Link href="/inventory">
-              <a className={`flex items-center p-3 rounded-md ${
+            <div
+              onClick={() => window.location.href = "/inventory"}
+              className={`flex items-center p-3 rounded-md cursor-pointer ${
                 isActive("/inventory") ? "bg-primary-light bg-opacity-10 text-primary" : "hover:bg-gray-100"
-              }`}>
-                <Database className="mr-3" size={20} />
-                <span>Inventory</span>
-              </a>
-            </Link>
+              }`}
+            >
+              <Database className="mr-3" size={20} />
+              <span>Inventory</span>
+            </div>
           </li>
         </ul>
       </nav>
