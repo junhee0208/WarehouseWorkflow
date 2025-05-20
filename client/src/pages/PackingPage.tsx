@@ -25,7 +25,23 @@ const PackingPage: React.FC = () => {
   
   const handlePackingComplete = () => {
     if (activeOrderId) {
+      // Mark the order as packed
       completeOrderPacking(activeOrderId);
+      
+      // Update local storage to track completed orders
+      const packedOrders = JSON.parse(localStorage.getItem('packedOrders') || '[]');
+      const pickedOrders = JSON.parse(localStorage.getItem('pickedOrders') || '[]');
+      
+      // Remove from picked orders (if it exists there)
+      const updatedPickedOrders = pickedOrders.filter((id: string) => id !== activeOrderId);
+      localStorage.setItem('pickedOrders', JSON.stringify(updatedPickedOrders));
+      
+      // Add to packed orders if not already there
+      if (!packedOrders.includes(activeOrderId)) {
+        packedOrders.push(activeOrderId);
+        localStorage.setItem('packedOrders', JSON.stringify(packedOrders));
+      }
+      
       setCompletedOrderId(activeOrderId);
       setActiveOrderId(null);
       localStorage.removeItem('activePackingOrderId');
@@ -33,7 +49,7 @@ const PackingPage: React.FC = () => {
       
       toast({
         title: "Packing completed",
-        description: `Order ${activeOrderId} has been successfully packed`,
+        description: `Order ${activeOrderId} has been successfully packed and ready for shipping`,
         variant: "default",
       });
     }

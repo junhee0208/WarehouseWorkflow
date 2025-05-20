@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useOrderService } from "@/services/orderService";
 import { useLocation } from "wouter";
+import { Order } from "@shared/schema";
 
 const PackingOrdersList: React.FC = () => {
   const [, setLocation] = useLocation();
-  const { getPickedOrders } = useOrderService();
+  const { getOrderById, getPickedOrders } = useOrderService();
+  const [pickedOrders, setPickedOrders] = useState<Order[]>([]);
   
-  const pickedOrders = getPickedOrders();
+  // Get picked orders from both the service and localStorage
+  useEffect(() => {
+    // Get service picked orders
+    const servicePickedOrders = getPickedOrders();
+    
+    // Get localStorage picked order IDs
+    const storedPickedOrderIds = JSON.parse(localStorage.getItem('pickedOrders') || '[]');
+    
+    // Combine both sources, ensuring no duplicates
+    const allPickedOrderIds = new Set([
+      ...servicePickedOrders.map(order => order.orderId),
+      ...storedPickedOrderIds
+    ]);
+    
+    // Convert to array of order objects
+    const combinedOrders = Array.from(allPickedOrderIds)
+      .map(id => getOrderById(id))
+      .filter(order => order !== undefined) as Order[];
+    
+    setPickedOrders(combinedOrders);
+  }, [getOrderById, getPickedOrders]);
   
   const handleStartPacking = (orderId: string) => {
     // Store the order ID in localStorage for the packing page to use

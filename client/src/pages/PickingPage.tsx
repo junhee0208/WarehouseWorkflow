@@ -23,7 +23,19 @@ const PickingPage: React.FC = () => {
   
   const handlePickingComplete = () => {
     if (activeOrderId) {
+      // Mark the order as picked and ready for packing
       completeOrderPicking(activeOrderId);
+      
+      // Store the picked order ID for packing
+      const packedOrders = JSON.parse(localStorage.getItem('packedOrders') || '[]');
+      const pickedOrders = JSON.parse(localStorage.getItem('pickedOrders') || '[]');
+      
+      // Add to picked orders if not already there
+      if (!pickedOrders.includes(activeOrderId)) {
+        pickedOrders.push(activeOrderId);
+        localStorage.setItem('pickedOrders', JSON.stringify(pickedOrders));
+      }
+      
       setCompletedOrderId(activeOrderId);
       setActiveOrderId(null);
       localStorage.removeItem('activeOrderId');
@@ -31,7 +43,7 @@ const PickingPage: React.FC = () => {
       
       toast({
         title: "Picking completed",
-        description: `Order ${activeOrderId} has been successfully picked`,
+        description: `Order ${activeOrderId} has been successfully picked and moved to packing queue`,
         variant: "default",
       });
     }
