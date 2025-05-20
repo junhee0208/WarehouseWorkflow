@@ -244,8 +244,7 @@ const PackingProcess: React.FC<PackingProcessProps> = ({
           <p className="text-muted-foreground">
             Customer: {order.customer.name} | Priority: 
             <Badge 
-              variant={order.priority as "standard" | "express"}
-              className="ml-2"
+              className={`ml-2 ${order.priority === "express" ? "bg-red-500 text-white" : "bg-blue-500 text-white"}`}
             >
               {order.priority.charAt(0).toUpperCase() + order.priority.slice(1)}
             </Badge>
